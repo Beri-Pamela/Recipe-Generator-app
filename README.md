@@ -7,4 +7,6 @@ A recipe generator app based on available ingredients
 ![Uploading meal app 1.drawio.png…]()
 
 ![SEquence Diagram ''  00](https://github.com/user-attachments/assets/09970a3f-dabc-4c41-901c-53fd556d4a76)
+![meal planning app Er diagram](https://github.com/user-attachments/assets/fe72e74f-05c3-43f5-b363-f840a0b686ce)
+
 
