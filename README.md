@@ -4,7 +4,8 @@ A recipe generator app based on available ingredients
 
 ![meal app 2 1 drawio](https://github.com/user-attachments/assets/f7ec8bc0-8c90-4772-a02a-74dec6f60aca)
 
-![meal app 3 drawio](https://github.com/user-attachments/assets/aeef8b8b-a2be-4bc5-a4be-0a548ad2639e)
+![Uploading meal app 3.1.drawio.png…]()
+
 ![Uploading meal app 1.drawio.png…]()
 
 ![SEquence Diagram ''  00](https://github.com/user-attachments/assets/09970a3f-dabc-4c41-901c-53fd556d4a76)
