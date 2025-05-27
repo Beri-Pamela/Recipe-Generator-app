@@ -125,3 +125,17 @@ class DietaryPreferenceSerializer(serializers.ModelSerializer):
         if 'preferences' in data and isinstance(data['preferences'], list):
             data['preferences'] = ','.join(data['preferences'])
         return super().to_internal_value(data)
+    
+# Add this to your users/serializers.py file
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True, write_only=True)
+    new_password = serializers.CharField(required=True, write_only=True)
+    confirm_new_password = serializers.CharField(required=True, write_only=True)
+
+    def validate(self, data):
+        if data['new_password'] != data['confirm_new_password']:
+            raise serializers.ValidationError({"new_password": "New passwords must match."})
+        # You might add more password validation here (e.g., strength checks)
+        return data
+    
