@@ -7,6 +7,7 @@ from .serializers import DietaryPreferenceSerializer, UserRegistrationSerializer
 from rest_framework.permissions import IsAuthenticated #import the new login serializer
 from .permissions import IsAdminUser # Import the custom permission class
 from .models import CustomUser, DietaryPreference # Import your CustomUser model
+from django.contrib.auth import logout # Import logout function
 
 class UserRegistrationView(APIView):
     def post(self, request):
@@ -92,3 +93,35 @@ class DietaryPreferenceView(APIView):
 
     # Note: You might also consider a PATCH method for partial updates,
     # but for a single TextField of preferences, PUT works fine.
+    def delete(self, request):
+        # Delete the dietary preferences for the current user
+        try:
+            preference = DietaryPreference.objects.get(user=request.user)
+            preference.delete()
+            return Response({'detail': 'Dietary preferences deleted successfully.'}, status=status.HTTP_204_NO_CONTENT)
+        except DietaryPreference.DoesNotExist:
+            return Response({'detail': 'Dietary preferences not found.'}, status=status.HTTP_404_NOT_FOUND)
+        
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        old_password = request.data.get('old_password')
+        new_password = request.data.get('new_password')
+
+        if not user.check_password(old_password):
+            return Response({'detail': 'Old password is incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.save()
+        return Response({'detail': 'Password changed successfully.'}, status=status.HTTP_200_OK)
+# Note: This view allows users to change their password.
+# It checks the old password, sets the new password, and saves the user.
+
+class UserLogoutView(APIView):
+    permission_classes = [IsAuthenticated] # Only authenticated users can log out
+
+    def post(self, request):
+        logout(request) # Invalidate the session
+        return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
