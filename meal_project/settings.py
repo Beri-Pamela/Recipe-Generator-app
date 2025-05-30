@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-fpz@@et1*1%$_@(chq^*%tcfg#4m__11+8u(_u6!!22-1@&f#o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+CSRF_COOKIE_NAME = "csrftoken"
+CSRF_HEADER_NAME = "X-CSRFToken"
+
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    ]
 
 
 # Application definition
@@ -46,13 +52,12 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'meal_project.urls'
@@ -138,3 +143,33 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# meal_project/settings.py
+
+# ... (other settings) ...
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8000", # The Django server itself
+    "http://localhost:8000", # The Django server itself
+
+    # IMPORTANT: Add the origin where your HTML file is served from
+    # If you open index.html directly, its origin might be 'null' or 'file://'
+    # For development, you might use an extension like Live Server, which gives it a port
+    "http://127.0.0.1:5500", # Example if you use VS Code's Live Server
+    "http://localhost:5500", # Example if you use VS Code's Live Server
+
+    # If you are using a different port for your HTML file, add it here.
+    # You can check your browser's address bar when you open the HTML file.
+]
+
+CORS_ALLOWED_HEADERS = [
+    'authorization',
+    'content-type',
+    'X-CSRFToken'
+]
+
+
+
+
+# Alternatively, for very simple local development (less secure for production):
+# CORS_ALLOW_ALL_ORIGINS = True
